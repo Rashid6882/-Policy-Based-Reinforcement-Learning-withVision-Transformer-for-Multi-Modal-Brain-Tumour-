@@ -1,0 +1,7 @@
+torch>=2.0.0
+torchvision
+h5py
+numpy
+flask
+matplotlib
+pytest

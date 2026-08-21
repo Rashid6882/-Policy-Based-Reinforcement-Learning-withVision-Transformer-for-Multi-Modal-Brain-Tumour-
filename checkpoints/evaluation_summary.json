@@ -1,0 +1,20 @@
+{
+    "DQN": {
+        "mean_dice": 0.0205862035886464,
+        "std_dice": 0.014396766779711067,
+        "mean_iou": 0.03016912914936256,
+        "std_iou": 0.01604631110554059,
+        "mean_sensitivity": 0.2843875304044638,
+        "mean_precision": 0.011018483081022967,
+        "mean_steps_to_converge": 20.0
+    },
+    "Double-DQN": {
+        "mean_dice": 0.18549254965326445,
+        "std_dice": 0.1677249108689014,
+        "mean_iou": 0.19269150835461915,
+        "std_iou": 0.1454971072162669,
+        "mean_sensitivity": 0.49970276279830017,
+        "mean_precision": 0.13730945456979113,
+        "mean_steps_to_converge": 19.35
+    }
+}

@@ -1,0 +1,7 @@
+BraTS2020_training_data/
+BraTS20 Training Metadata.csv
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.idea/
