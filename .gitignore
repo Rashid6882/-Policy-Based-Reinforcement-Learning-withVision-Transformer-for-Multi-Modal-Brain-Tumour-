@@ -1,0 +1,23 @@
+# Git ignore for BraTS RL project
+
+# Large Datasets
+ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData/
+ASNR-MICCAI-BraTS2023-GLI-Challenge-ValidationData/
+data/
+
+# Python Cache & Environment
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+env/
+
+# Temporary office files & Lock files
+~$*
+*.tmp
+
+# Model Checkpoints & Large Outputs
+*.pt
+*.pth
+*.nii.gz

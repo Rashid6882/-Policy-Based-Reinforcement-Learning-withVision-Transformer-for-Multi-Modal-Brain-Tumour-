@@ -1,0 +1,32 @@
+data:
+  data_dir: "ASNR-MICCAI-BraTS2023-GLI-Challenge-TrainingData"
+  split_file: "data/splits/train_val_split.json"
+  subregion: "WT"
+
+environment:
+  max_steps: 20
+  initial_scale: 0.5
+  randomize_initial_window: true
+
+model:
+  encoder_type: "vit"
+  in_channels: 4
+  feature_dim: 256
+  num_actions: 7
+
+agent:
+  lr: 0.0001
+  gamma: 0.95
+  buffer_capacity: 40000
+  batch_size: 64
+  epsilon_start: 1.0
+  epsilon_end: 0.05
+  epsilon_decay: 0.9999
+  target_update_freq: 500
+  use_double_dqn: true
+
+training:
+  episodes: 1000
+  eval_freq: 50
+  save_freq: 100
+  output_dir: "outputs/vit_dqn"
