@@ -459,10 +459,12 @@ def build_presentation(comparison_json_path="outputs/comparison/comparison_summa
         prs.save(output_pptx_path)
         print(f"Presentation saved successfully to {output_pptx_path}")
     except PermissionError:
-        alt_path = output_pptx_path.replace(".pptx", "_v2.pptx")
+        import time
+        alt_path = f"outputs/presentation/Lesion_Localization_ViT_vs_CNN_{int(time.time())}.pptx"
         prs.save(alt_path)
         print(f"Original path locked. Presentation saved successfully to {alt_path}")
         output_pptx_path = alt_path
+
     return output_pptx_path
 
 if __name__ == "__main__":
