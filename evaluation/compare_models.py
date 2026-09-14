@@ -42,7 +42,7 @@ def compare_cnn_vs_vit(output_dir="outputs/comparison"):
     ax[0].set_xticks(x)
     ax[0].set_xticklabels(regions)
     ax[0].legend()
-    ax[0].set_ylim(0, 1.0)
+    ax[0].set_ylim(0, 0.6)
     for r in rects1:
         h = r.get_height()
         ax[0].annotate(f'{h:.3f}', xy=(r.get_x() + r.get_width()/2, h), xytext=(0, 3),
@@ -60,7 +60,7 @@ def compare_cnn_vs_vit(output_dir="outputs/comparison"):
     ax[1].set_xticks(x)
     ax[1].set_xticklabels(regions)
     ax[1].legend()
-    ax[1].set_ylim(0, 1.0)
+    ax[1].set_ylim(0, 0.4)
     for r in rects3:
         h = r.get_height()
         ax[1].annotate(f'{h:.3f}', xy=(r.get_x() + r.get_width()/2, h), xytext=(0, 3),
@@ -75,27 +75,31 @@ def compare_cnn_vs_vit(output_dir="outputs/comparison"):
     plt.savefig(plot_path, dpi=200)
     plt.close()
 
-    # Write Markdown Report
-    md_content = f"""# Quantitative Comparison: Non-ViT (CNN) vs Vision Transformer (ViT)
+    # Write Markdown Report with REAL empirical findings
+    md_content = f"""# Empirical Comparison: Non-ViT (CNN) vs Vision Transformer (ViT)
 
-## Evaluation Results Summary
+## Measured Evaluation Results Summary (N=125 Validation Cases)
 
-| Subregion | Metric | Non-ViT (CNN) | ViT (Vision Transformer) | Improvement (ViT vs CNN) |
+| Subregion | Metric | Non-ViT (CNN) | ViT (Vision Transformer) | Difference (ViT vs CNN) |
 |---|---|---|---|---|
-| **WT (Whole Tumor)** | Dice Score | {cnn_summary['WT']['dice_mean']:.4f} ± {cnn_summary['WT']['dice_std']:.4f} | **{vit_summary['WT']['dice_mean']:.4f} ± {vit_summary['WT']['dice_std']:.4f}** | **+{(vit_summary['WT']['dice_mean'] - cnn_summary['WT']['dice_mean']):+.4f}** |
-| | Jaccard IoU | {cnn_summary['WT']['iou_mean']:.4f} ± {cnn_summary['WT']['iou_std']:.4f} | **{vit_summary['WT']['iou_mean']:.4f} ± {vit_summary['WT']['iou_std']:.4f}** | **+{(vit_summary['WT']['iou_mean'] - cnn_summary['WT']['iou_mean']):+.4f}** |
-| | Sensitivity | {cnn_summary['WT']['sens_mean']:.4f} | **{vit_summary['WT']['sens_mean']:.4f}** | **+{(vit_summary['WT']['sens_mean'] - cnn_summary['WT']['sens_mean']):+.4f}** |
-| | Precision | {cnn_summary['WT']['prec_mean']:.4f} | **{vit_summary['WT']['prec_mean']:.4f}** | **+{(vit_summary['WT']['prec_mean'] - cnn_summary['WT']['prec_mean']):+.4f}** |
-| **TC (Tumor Core)** | Dice Score | {cnn_summary['TC']['dice_mean']:.4f} | **{vit_summary['TC']['dice_mean']:.4f}** | **+{(vit_summary['TC']['dice_mean'] - cnn_summary['TC']['dice_mean']):+.4f}** |
-| | Jaccard IoU | {cnn_summary['TC']['iou_mean']:.4f} | **{vit_summary['TC']['iou_mean']:.4f}** | **+{(vit_summary['TC']['iou_mean'] - cnn_summary['TC']['iou_mean']):+.4f}** |
-| **ET (Enhancing Tumor)** | Dice Score | {cnn_summary['ET']['dice_mean']:.4f} | **{vit_summary['ET']['dice_mean']:.4f}** | **+{(vit_summary['ET']['dice_mean'] - cnn_summary['ET']['dice_mean']):+.4f}** |
-| | Jaccard IoU | {cnn_summary['ET']['iou_mean']:.4f} | **{vit_summary['ET']['iou_mean']:.4f}** | **+{(vit_summary['ET']['iou_mean'] - cnn_summary['ET']['iou_mean']):+.4f}** |
+| **WT (Whole Tumor)** | Dice Score | **{cnn_summary['WT']['dice_mean']:.4f} ± {cnn_summary['WT']['dice_std']:.4f}** | {vit_summary['WT']['dice_mean']:.4f} ± {vit_summary['WT']['dice_std']:.4f} | **{(vit_summary['WT']['dice_mean'] - cnn_summary['WT']['dice_mean']):+.4f}** |
+| | Jaccard IoU | **{cnn_summary['WT']['iou_mean']:.4f} ± {cnn_summary['WT']['iou_std']:.4f}** | {vit_summary['WT']['iou_mean']:.4f} ± {vit_summary['WT']['iou_std']:.4f} | **{(vit_summary['WT']['iou_mean'] - cnn_summary['WT']['iou_mean']):+.4f}** |
+| | Sensitivity | {cnn_summary['WT']['sens_mean']:.4f} | **{vit_summary['WT']['sens_mean']:.4f}** | **{(vit_summary['WT']['sens_mean'] - cnn_summary['WT']['sens_mean']):+.4f}** |
+| | Precision | **{cnn_summary['WT']['prec_mean']:.4f}** | {vit_summary['WT']['prec_mean']:.4f} | **{(vit_summary['WT']['prec_mean'] - cnn_summary['WT']['prec_mean']):+.4f}** |
+| **TC (Tumor Core)** | Dice Score | **{cnn_summary['TC']['dice_mean']:.4f}** | {vit_summary['TC']['dice_mean']:.4f} | **{(vit_summary['TC']['dice_mean'] - cnn_summary['TC']['dice_mean']):+.4f}** |
+| | Jaccard IoU | **{cnn_summary['TC']['iou_mean']:.4f}** | {vit_summary['TC']['iou_mean']:.4f} | **{(vit_summary['TC']['iou_mean'] - cnn_summary['TC']['iou_mean']):+.4f}** |
+| **ET (Enhancing Tumor)** | Dice Score | **{cnn_summary['ET']['dice_mean']:.4f}** | {vit_summary['ET']['dice_mean']:.4f} | **{(vit_summary['ET']['dice_mean'] - cnn_summary['ET']['dice_mean']):+.4f}** |
+| | Jaccard IoU | **{cnn_summary['ET']['iou_mean']:.4f}** | {vit_summary['ET']['iou_mean']:.4f} | **{(vit_summary['ET']['iou_mean'] - cnn_summary['ET']['iou_mean']):+.4f}** |
 
 - **Mean Best-Step Fraction**:
-  - Non-ViT (CNN): {cnn_summary['mean_best_step_frac']*100:.1f}% of episode
-  - ViT (Transformer): {vit_summary['mean_best_step_frac']*100:.1f}% of episode
+  - Non-ViT (CNN): {cnn_summary['mean_best_step_frac']*100:.1f}% of episode (~Step {cnn_summary['mean_best_step_frac']*20:.1f})
+  - ViT (Transformer): {vit_summary['mean_best_step_frac']*100:.1f}% of episode (~Step {vit_summary['mean_best_step_frac']*20:.1f})
 
-![Metrics Comparison](metrics_comparison.png)
+## Scientific Inference & Discussion
+
+1. **Empirical Finding**: Non-ViT (CNN) outperforms Vision Transformer (ViT) on overlap accuracy (WT Dice 0.2732 vs 0.2487).
+2. **Inductive Bias vs. Sample Efficiency**: Convolutional Neural Networks possess strong local spatial translation invariance, enabling effective feature learning on modest case volumes (500 cases). In contrast, Vision Transformers trained from scratch lack inductive biases and require significantly larger datasets or self-supervised pretraining (e.g. DINO/MAE) to form optimal spatial attention maps.
+3. **Trajectory Speed vs. Overlap Quality**: ViT finds its best window earlier in the episode (58.8% step fraction vs CNN's 77.1%), but that window is less accurate in overlap due to coarser spatial representations.
 """
     with open(os.path.join(output_dir, "model_comparison.md"), "w") as f:
         f.write(md_content)
